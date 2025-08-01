@@ -1,6 +1,6 @@
 import Flutter
 import UIKit
-import RealReachability
+import Network
 
 public class TrafficStatsPlugin: NSObject, FlutterPlugin, FlutterStreamHandler {
     private var eventSink: FlutterEventSink?
@@ -27,31 +27,11 @@ public class TrafficStatsPlugin: NSObject, FlutterPlugin, FlutterStreamHandler {
     }
 
     private func startSpeedMonitoring() {
-        RealReachability.sharedInstance()?.startNotifier()
-        NotificationCenter.default.addObserver(self, selector: #selector(networkChanged(_:)), name: NSNotification.Name.realReachabilityChanged, object: nil)
         startTimer()
     }
 
     private func stopSpeedMonitoring() {
-        RealReachability.sharedInstance()?.stopNotifier()
-        NotificationCenter.default.removeObserver(self, name: NSNotification.Name.realReachabilityChanged, object: nil)
         stopTimer()
-    }
-
-    @objc private func networkChanged(_ notification: Notification) {
-        guard let reachability = RealReachability.sharedInstance()?.currentReachabilityStatus() else { return }
-
-        switch reachability {
-        case .RealStatusNotReachable:
-            DispatchQueue.main.async {
-                self.eventSink?(["uploadSpeed": 0, "downloadSpeed": 0])
-            }
-        case .RealStatusViaWiFi, .RealStatusViaWWAN:
-            // Start the timer to monitor speed
-            startTimer()
-        default:
-            break
-        }
     }
 
     private func startTimer() {
@@ -103,5 +83,4 @@ public class TrafficStatsPlugin: NSObject, FlutterPlugin, FlutterStreamHandler {
             self.eventSink?(["uploadSpeed": uploadSpeed, "downloadSpeed": downloadSpeed])
         }
     }
-
 }

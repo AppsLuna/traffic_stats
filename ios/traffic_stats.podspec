@@ -15,7 +15,6 @@ A plugin for getting network traffic stats
   s.source           = { :path => '.' }
   s.source_files = 'Classes/**/*'
   s.dependency 'Flutter'
-  s.dependency       'RealReachability'
   s.platform = :ios, '12.0'
 
   # Flutter.framework does not contain a i386 slice.
