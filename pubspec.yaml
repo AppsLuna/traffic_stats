@@ -1,6 +1,6 @@
 name: traffic_stats
-description: "A plugin for getting network traffic stats"
-version: 0.0.2
+description: "A plugin for getting network traffic stats with improved iOS device compatibility"
+version: 0.0.3
 repository: https://github.com/whitecodel/traffic_stats
 
 environment:

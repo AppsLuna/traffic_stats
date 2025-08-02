@@ -45,8 +45,7 @@ class _NetworkSpeedPageState extends State<NetworkSpeedPage> {
 
   @override
   void dispose() {
-    _networkSpeedService
-        .dispose(); // Dispose the service when the widget is disposed
+    _networkSpeedService.dispose(); // Dispose the service when the widget is disposed
     super.dispose();
   }
 
